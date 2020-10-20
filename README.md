@@ -1,5 +1,12 @@
 # Texas Flag
 
+Flag of Texas, in PostScript, derived from legal statute and some trig.
+
+## Installation, “use”
+
+1. Install GhostScript
+2. run `make` to generate flag.pdf
+
 ## References
 
 - [State Flag Description](https://www.tsl.texas.gov/ref/abouttx/flagdes.html) (Texas State Library and Archives)
@@ -10,3 +17,4 @@
 ## License
 
 The design of course belongs to Texas.
+This implementaiton © Steven R. Loomis, and distributed under Apache 2.0 ( see [LICENSE](./LICENSE) )
