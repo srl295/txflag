@@ -1,6 +1,10 @@
 %!PS-Adobe-3.0
 
 /in {72 mul} def
+/GRAY { 0.1 setgray } def
+/BLUE { 0.25 setgray } def
+/RED { 0.75 setgray } def
+/WHITE { 1.0 setgray } def
 
 /height 3 in def
 /width 3 2 div height mul def
@@ -11,8 +15,88 @@ inset inset translate
 
 % /gray 0.5 0.5 0.5 setcolor def
 
-% gra>My
-0.1 setgray
+
+% blue
+BLUE
+0 0 moveto
+width 3 div 0 rlineto
+0 height rlineto
+width 3 div neg 0 rlineto
+0 height neg rlineto
+fill
+
+% WHITE
+WHITE
+.9 setgray % TEST
+width 3 div height 2 div moveto
+width 3 div 2 mul 0 rlineto
+0 height 2 div rlineto
+width 3 div 2 mul neg 0 rlineto
+0 height 2 div neg rlineto
+fill
+
+RED
+width 3 div 0 moveto
+width 3 div 2 mul 0 rlineto
+0 height 2 div rlineto
+width 3 div 2 mul neg 0 rlineto
+0 height 2 div neg rlineto
+fill
+
+% now the star
+/starwidth width 3 div .75 mul def
+% number of points
+/starpt 3 def
+% interior angle of nominal polygon
+/theta 360 starpt div def
+% edge of nominal polygon
+/ell
+    starwidth 2 div
+    theta 2 div sin 
+  mul 2 mul def
+
+WHITE
+gsave
+    width 3 div 2 div
+    height 2 div
+    translate
+    % -45 rotate % DEBUG
+    newpath
+    0 starwidth 2 div moveto
+    theta 2 div rotate
+
+    starpt {
+        % currentpoint starwidth 10 div 0 360 arc 
+        currentpoint translate
+        theta neg rotate
+
+
+        ell  0  rlineto
+
+        %     % 0 starwidth 2 div starwidth 10 div 0 360 arc 
+        %     % stroke
+        % % starwidth 5 div starwidth 2 div neg rlineto
+        % 0 0 moveto 360 starpt div rotate
+        % 0 starwidth 2 div lineto
+    } repeat
+    % closepath 
+    stroke
+grestore
+
+% now the star's circle for ref
+gsave 
+    GRAY
+    3 setlinewidth
+    newpath
+    width 3 div 2 div
+    height 2 div
+    starwidth 2 div
+    0 360 arc
+    stroke
+grestore
+
+% gray (outer box)
+GRAY
 
 0 0 moveto
     0 height rlineto
@@ -21,15 +105,5 @@ inset inset translate
     width neg 0 rlineto
 stroke
 
-% blue
-0.25 setgray
-0 0 moveto
-width 3 div 0 rlineto
-0 height rlineto
-width 3 div neg 0 rlineto
-0 height neg rlineto
-fill
-
-% 
 
 showpage
