@@ -1,14 +1,16 @@
 %!PS-Adobe-3.0
 
 /in {72 mul} def
-/GRAY { 0.1 setgray } def
-/BLUE { 0.25 setgray } def
-/RED { 0.75 setgray } def
+/GRAY { 0.1 setgray  } def
+/BLUE { 0.25 setgray 0 0.12549019607843137 0.3568627450980392 setrgbcolor } def
+/RED { 0.75 setgray 191 256 div 13 256 div 62 256 div setrgbcolor} def
 /WHITE { 1.0 setgray } def
 
 /height 3 in def
 /width 3 2 div height mul def
 /inset 1 in def
+
+
 
 % box
 inset inset translate
@@ -45,15 +47,22 @@ fill
 
 % now the star
 /starwidth width 3 div .75 mul def
+
 % number of points
 /starpt 3 def
+
 % interior angle of nominal polygon
 /theta 360 starpt div def
+% 𝜃 = 360°/starpt
+
 % edge of nominal polygon
 /ell
     starwidth 2 div
     theta 2 div sin 
   mul 2 mul def
+  % lengt of each edge =
+  % l = 2r × sin (𝜃/2)
+  % where r = 2w
 
 WHITE
 gsave
@@ -80,13 +89,15 @@ gsave
         % 0 starwidth 2 div lineto
     } repeat
     % closepath 
-    stroke
+    fill
 grestore
 
 % now the star's circle for ref
 gsave 
     GRAY
     3 setlinewidth
+    [ 1 3  ] 2 setdash
+    0 1 0 setrgbcolor % green
     newpath
     width 3 div 2 div
     height 2 div
