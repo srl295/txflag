@@ -4,13 +4,18 @@
 /GRAY { 0.1 setgray  } def
 /BLUE { 0.25 setgray 0 0.12549019607843137 0.3568627450980392 setrgbcolor } def
 /RED { 0.75 setgray 191 256 div 13 256 div 62 256 div setrgbcolor} def
-/WHITE { 1.0 setgray } def
+/WHITE { 1.0 setgray 1 1 1 setrgbcolor } def
 
 /height 3 in def
 /width 3 2 div height mul def
 /inset 1 in def
 
+% number of points
+/starpt 5 def
 
+% set this to 1 for debug or 0 for no debug
+% shows the law-mandated circle of reference, plus shows a polygon behind the star (in red)
+/DEBUG 0 def
 
 % box
 inset inset translate
@@ -29,7 +34,7 @@ fill
 
 % WHITE
 WHITE
-.9 setgray % TEST
+% .9 setgray % TEST
 width 3 div height 2 div moveto
 width 3 div 2 mul 0 rlineto
 0 height 2 div rlineto
@@ -48,9 +53,6 @@ fill
 % now the star
 /starwidth width 3 div .75 mul def
 
-% number of points
-/starpt 3 def
-
 % interior angle of nominal polygon
 /theta 360 starpt div def
 % 𝜃 = 360°/starpt
@@ -63,6 +65,36 @@ fill
   % lengt of each edge =
   % l = 2r × sin (𝜃/2)
   % where r = 2w
+
+% DEBUG: polygon
+DEBUG {
+    RED
+    gsave
+        width 3 div 2 div
+        height 2 div
+        translate
+        % -45 rotate % DEBUG
+        newpath
+        0 starwidth 2 div moveto
+        theta 2 div rotate
+
+        starpt {
+            % currentpoint starwidth 10 div 0 360 arc 
+            currentpoint translate
+            theta neg rotate
+            ell  0  rlineto
+
+            
+            %     % 0 starwidth 2 div starwidth 10 div 0 360 arc 
+            %     % stroke
+            % % starwidth 5 div starwidth 2 div neg rlineto
+            % 0 0 moveto 360 starpt div rotate
+            % 0 starwidth 2 div lineto
+        } repeat
+        % closepath 
+        fill
+    grestore
+} repeat % END debug
 
 WHITE
 gsave
@@ -78,9 +110,8 @@ gsave
         % currentpoint starwidth 10 div 0 360 arc 
         currentpoint translate
         theta neg rotate
-
-
         ell  0  rlineto
+
 
         %     % 0 starwidth 2 div starwidth 10 div 0 360 arc 
         %     % stroke
@@ -92,19 +123,21 @@ gsave
     fill
 grestore
 
-% now the star's circle for ref
-gsave 
-    GRAY
-    3 setlinewidth
-    [ 1 3  ] 2 setdash
-    0 1 0 setrgbcolor % green
-    newpath
-    width 3 div 2 div
-    height 2 div
-    starwidth 2 div
-    0 360 arc
-    stroke
-grestore
+DEBUG {
+    % now the star's circle for ref
+    gsave 
+        GRAY
+        3 setlinewidth
+        [ 1 3  ] 2 setdash
+        0 1 0 setrgbcolor % green
+        newpath
+        width 3 div 2 div
+        height 2 div
+        starwidth 2 div
+        0 360 arc
+        stroke
+    grestore
+} repeat % end DEBUG
 
 % gray (outer box)
 GRAY
