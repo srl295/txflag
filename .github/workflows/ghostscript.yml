@@ -28,5 +28,5 @@ jobs:
         run: make
       - uses: actions/upload-artifact@v2
         with:
-          name: pdf
-          path: flag.pdf
+          name: txflag
+          path: flag.pdf flag.ps flag.png
