@@ -2,6 +2,8 @@
 
 Flag of Texas, in PostScript, derived from legal statute and some trig.
 
+![CI](https://github.com/srl295/txflag/workflows/CI/badge.svg)
+
 ## Installation, “use”
 
 1. Install GhostScript
