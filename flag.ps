@@ -22,13 +22,16 @@
 /inset 1 in def
 
 % number of points
-/starpt 5 def
+/starpt 3 def
+% 0 = no depth (polygon). 1 = starfish.
+% This is the multiplied against (𝜃/2) to calculate the outside angle of the star's "cut in"
+/stardepth 1 def
 
 % set this to 1 for debug or 0 for no debug
-% shows the law-mandated circle of reference, plus shows a polygon behind the star (in red)
-/DEBUG 0 def
+% shows the legally specified circle of reference, plus shows a polygon behind the star (in red)
+/DEBUG 1 def
 
-% Defs
+% Internal Defs
 % blue width
 /bwid width 3 div def
 % half blue width
@@ -39,7 +42,7 @@
 /wwid bwid 2 mul def
 % now the star
 /starwidth width 3 div .75 mul def
-/hstarwidth starwidth 2 div dev
+/hstarwidth starwidth 2 div def
 
 % interior angle of nominal polygon
 /theta 360 starpt div def
@@ -53,7 +56,47 @@
   % lengt of each edge =
   % l = 2r × sin (𝜃/2)
   % where r = 2w
-  
+
+% gamma  is the "cut in" angle
+/gamma theta 2 div stardepth mul def
+% m is the length of the single cut-in line
+/emm
+    ell 2 div
+    gamma cos
+        mul def
+
+gsave
+    0 setgray
+    gsave
+        1 in height 2 mul  translate
+        0.5 setlinewidth 
+        0 0 moveto 1 in 0 rlineto stroke
+        2 setlinewidth
+        theta neg rotate
+        newpath
+            0 0 moveto
+                % 0 1 inch rlineto 0 .5 inch neg rlineto 
+                ell 0 rlineto 
+                % 0 1 inch rlineto 0 .5 inch neg rlineto 
+        stroke
+    grestore
+
+    gsave
+        4 in height 2 mul  translate
+        0.5 setlinewidth 
+        0 0 moveto 1 in 0 rlineto stroke
+        2 setlinewidth
+        gamma neg rotate
+        newpath
+            0 0 moveto
+                % 0 1 inch rlineto 0 .5 inch neg rlineto 
+                emm 0 rlineto 
+                % 0 1 inch rlineto 0 .5 inch neg rlineto 
+        stroke
+    grestore
+    
+grestore
+
 % ----- begin
 
 % box
@@ -81,6 +124,7 @@ wwid neg 0 rlineto
 0 hheight neg rlineto
 fill
 
+
 RED
 bwid 0 moveto
 wwid 0 rlineto
@@ -88,7 +132,6 @@ wwid 0 rlineto
 wwid neg 0 rlineto
 0 hheight neg rlineto
 fill
-
 
 
 % DEBUG: polygon
@@ -121,31 +164,37 @@ DEBUG {
     grestore
 } repeat % END debug
 
+
 WHITE
+% GRAY
 gsave
     hbwid
     hheight
     translate
     % -45 rotate % DEBUG
     newpath
-    0 hstarwidth div moveto
-    theta 2 div rotate
-
-    starpt {
-        % currentpoint starwidth 10 div 0 360 arc 
+    0 hstarwidth moveto
+    % gamma  rotate
+    % -90 rotate
+    % theta neg rotate
+    theta 180 sub rotate
+    starpt
+    2 {
         currentpoint translate
-        theta neg rotate
-        ell  0  rlineto
-
-
+        gamma 2 div neg rotate
+        emm 2 mul 0  rlineto
+        90 gamma 2 div sub rotate
+        emm 2 mul 0 rlineto
+        % theta neg rotate
         %     % 0 starwidth 2 div starwidth 10 div 0 360 arc 
         %     % stroke
         % % starwidth 5 div starwidth 2 div neg rlineto
         % 0 0 moveto 360 starpt div rotate
         % 0 starwidth 2 div lineto
+        theta 270 sub rotate
     } repeat
     % closepath 
-    fill
+    stroke
 grestore
 
 DEBUG {
