@@ -21,4 +21,4 @@ Flag of Texas, in PostScript, derived from legal statute and some trig.
 ## License
 
 The design of course belongs to Texas.
-This implementaiton © Steven R. Loomis, and distributed under Apache 2.0 ( see [LICENSE](./LICENSE) )
+This implementation © Steven R. Loomis, and distributed under Apache 2.0 ( see [LICENSE](./LICENSE) )
