@@ -21,6 +21,12 @@
 /width 3 2 div height mul def
 /inset 1 in def
 
+% add text
+
+/Helvetica findfont 0.1 in scalefont setfont
+3 in 0.5 in moveto
+(https://github.com/srl295/txflag.git) show
+
 % number of points
 /starpt 5 def
 % 0 = no depth (polygon). 1 = starfish.
@@ -218,6 +224,7 @@ GRAY
     0 height neg rlineto
     width neg 0 rlineto
 stroke
+
 
 
 showpage
