@@ -22,14 +22,14 @@
 /inset 1 in def
 
 % number of points
-/starpt 3 def
+/starpt 5 def
 % 0 = no depth (polygon). 1 = starfish.
 % This is the multiplied against (𝜃/2) to calculate the outside angle of the star's "cut in"
 /stardepth 1 def
 
 % set this to 1 for debug or 0 for no debug
 % shows the legally specified circle of reference, plus shows a polygon behind the star (in red)
-/DEBUG 1 def
+/DEBUG 0 def
 
 % Internal Defs
 % blue width
@@ -64,38 +64,39 @@
     ell 2 div
     gamma cos
         mul def
-
-gsave
-    0 setgray
+DEBUG {
     gsave
-        1 in height 2 mul  translate
-        0.5 setlinewidth 
-        0 0 moveto 1 in 0 rlineto stroke
-        2 setlinewidth
-        theta neg rotate
-        newpath
-            0 0 moveto
-                % 0 1 inch rlineto 0 .5 inch neg rlineto 
-                ell 0 rlineto 
-                % 0 1 inch rlineto 0 .5 inch neg rlineto 
-        stroke
-    grestore
+        0 setgray
+        gsave
+            1 in height 2 mul  translate
+            0.5 setlinewidth 
+            0 0 moveto 1 in 0 rlineto stroke
+            2 setlinewidth
+            theta neg rotate
+            newpath
+                0 0 moveto
+                    % 0 1 inch rlineto 0 .5 inch neg rlineto 
+                    ell 0 rlineto 
+                    % 0 1 inch rlineto 0 .5 inch neg rlineto 
+            stroke
+        grestore
 
-    gsave
-        4 in height 2 mul  translate
-        0.5 setlinewidth 
-        0 0 moveto 1 in 0 rlineto stroke
-        2 setlinewidth
-        gamma neg rotate
-        newpath
-            0 0 moveto
-                % 0 1 inch rlineto 0 .5 inch neg rlineto 
-                emm 0 rlineto 
-                % 0 1 inch rlineto 0 .5 inch neg rlineto 
-        stroke
+        gsave
+            4 in height 2 mul  translate
+            0.5 setlinewidth 
+            0 0 moveto 1 in 0 rlineto stroke
+            2 setlinewidth
+            gamma neg rotate
+            newpath
+                0 0 moveto
+                    % 0 1 inch rlineto 0 .5 inch neg rlineto 
+                    emm 0 rlineto 
+                    % 0 1 inch rlineto 0 .5 inch neg rlineto 
+            stroke
+        grestore
+        
     grestore
-    
-grestore
+} repeat
 
 % ----- begin
 
@@ -134,7 +135,7 @@ wwid neg 0 rlineto
 fill
 
 
-% DEBUG: polygon
+% DEBUG: red polygon under the star
 DEBUG {
     RED
     gsave
@@ -165,6 +166,7 @@ DEBUG {
 } repeat % END debug
 
 
+% the actual star!
 WHITE
 % GRAY
 gsave
@@ -176,25 +178,19 @@ gsave
     0 hstarwidth moveto
     % gamma  rotate
     % -90 rotate
-    % theta neg rotate
-    theta 180 sub rotate
+    theta neg rotate
+    theta 90 sub rotate
     starpt
-    2 {
+    starpt {
         currentpoint translate
         gamma 2 div neg rotate
-        emm 2 mul 0  rlineto
+        emm 2.5 mul 0  rlineto % why 2.5?
         90 gamma 2 div sub rotate
-        emm 2 mul 0 rlineto
-        % theta neg rotate
-        %     % 0 starwidth 2 div starwidth 10 div 0 360 arc 
-        %     % stroke
-        % % starwidth 5 div starwidth 2 div neg rlineto
-        % 0 0 moveto 360 starpt div rotate
-        % 0 starwidth 2 div lineto
+        emm 2.5 mul 0 rlineto % why 2.5?
         theta 270 sub rotate
     } repeat
     % closepath 
-    stroke
+    fill
 grestore
 
 DEBUG {
