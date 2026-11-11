@@ -51,7 +51,7 @@ inline TxColor getTxFlagPixel(
                 return TxRed; // strawberry below
             }
         } else {
-            if (h > (hbwid - hstarwidth) && h < (hbwid + hstarwidth) &&
+            if (h > (hbwid - hstarwidth/2) && h < (hbwid + hstarwidth/2) &&
                 v > (hheight - hstarwidth/2) && v < (hheight + hstarwidth/2)) {
                 return TxWhite;
             } else {
