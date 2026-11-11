@@ -11,6 +11,11 @@ Flag of Texas, in PostScript, derived from legal statute and some trig.
 1. Install GhostScript
 2. run `make` to generate flag.pdf
 
+## LOGO!
+
+- [txflag.logo](./txflag.logo) ( screenshot [here](./txflag-logo.jpg) )
+
+
 ## References
 
 - [State Flag Description](https://www.tsl.texas.gov/ref/abouttx/flagdes.html) (Texas State Library and Archives)
